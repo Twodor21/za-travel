@@ -20,13 +20,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* Aliases */
-    "baseUrl": "./src",
+    /* import Aliases */
+    "baseUrl": ".",
     "paths": {
-      "@pages/*": ["./pages/*"],
-      "@features/*": ["./features/*"]
-    }
+      "@pages/*": ["src/pages/*"],
+      "@features/*": ["src/features/*"],
+      "@config/*": ["src/app/config/*"],
+    },
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
 }
