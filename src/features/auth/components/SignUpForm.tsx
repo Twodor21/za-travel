@@ -1,9 +1,15 @@
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 
 import { Box, Link, Stack, TextField, Typography } from '@mui/material';
 
 import { AppRoutes } from '@config/routes';
 import AppButton from '@features/ui/AppButton';
+import { auth } from '@services/firebase';
+import { useAppDispatch, useAppSelector } from '@store/index';
+
+import { registerUser } from '../store/authActions';
+import { selectUser, setUserName } from '../store/authSlice';
 
 interface FormInput {
   name: string;
@@ -13,19 +19,12 @@ interface FormInput {
 }
 
 export default function SignUpForm() {
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      passwordRepeat: '',
-    },
-  });
+  const user = useAppSelector(selectUser);
+  const { handleSubmit, control, password, onSubmit } = useSignUpForm();
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data);
-    // TODO: Register user with firebase
-  };
+  if (user) {
+    return <Navigate to={AppRoutes.dashboard} replace />;
+  }
 
   return (
     <Box
@@ -37,7 +36,9 @@ export default function SignUpForm() {
       <Controller
         name="name"
         control={control}
-        rules={{ required: 'Please specify name...' }}
+        rules={{
+          required: 'Please specify name...',
+        }}
         render={({ field, fieldState }) => (
           <>
             <TextField
@@ -108,7 +109,13 @@ export default function SignUpForm() {
       <Controller
         name="passwordRepeat"
         control={control}
-        rules={{ required: 'Please enter your password confirmation...' }}
+        rules={{
+          required: 'Please enter your password confirmation...',
+          validate: (confirmPassword) =>
+            confirmPassword !== password
+              ? "Password doesn't match!"
+              : undefined,
+        }}
         render={({ field, fieldState }) => (
           <>
             <TextField
@@ -147,4 +154,30 @@ export default function SignUpForm() {
       </Stack>
     </Box>
   );
+}
+
+function useSignUpForm() {
+  const dispatch = useAppDispatch();
+  const { handleSubmit, control, watch } = useForm<FormInput>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      passwordRepeat: '',
+    },
+  });
+  const password = watch('password');
+
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    await dispatch(
+      registerUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      }),
+    ).unwrap();
+    dispatch(setUserName(auth.currentUser?.displayName));
+  };
+
+  return { handleSubmit, control, password, onSubmit };
 }

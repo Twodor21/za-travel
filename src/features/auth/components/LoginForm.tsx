@@ -1,9 +1,14 @@
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 
 import { Box, Link, Stack, TextField, Typography } from '@mui/material';
 
 import { AppRoutes } from '@config/routes';
 import AppButton from '@features/ui/AppButton';
+import { useAppDispatch, useAppSelector } from '@store/index';
+
+import { loginUser } from '../store/authActions';
+import { selectUser } from '../store/authSlice';
 
 interface FormInput {
   email: string;
@@ -11,22 +16,13 @@ interface FormInput {
 }
 
 export default function LoginForm() {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  const user = useAppSelector(selectUser);
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data);
-    // TODO login through Firebase
-  };
-  console.log(errors);
+  const { handleSubmit, control, onSubmit } = useLoginForm();
+
+  if (user) {
+    return <Navigate to={AppRoutes.dashboard} replace />;
+  }
 
   return (
     <Box
@@ -101,4 +97,28 @@ export default function LoginForm() {
       </Stack>
     </Box>
   );
+}
+
+function useLoginForm() {
+  const dispatch = useAppDispatch();
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    dispatch(
+      loginUser({
+        email: data.email,
+        password: data.password,
+      }),
+    );
+  };
+  return {
+    handleSubmit,
+    control,
+    onSubmit,
+  };
 }
