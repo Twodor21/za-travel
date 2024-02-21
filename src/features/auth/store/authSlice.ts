@@ -11,7 +11,6 @@ interface UserInfo {
 }
 
 interface AuthState {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: UserInfo | null;
   status: 'loading' | 'idle' | 'failed' | 'succeeded';
   error?: string | null;
