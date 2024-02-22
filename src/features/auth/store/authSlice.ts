@@ -11,7 +11,6 @@ interface UserInfo {
 }
 
 interface AuthState {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: UserInfo | null;
   status: 'loading' | 'idle' | 'failed' | 'succeeded';
   error?: string | null;
@@ -35,7 +34,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
-      state.status = 'idle';
+      state.status = 'succeeded';
       state.error = null;
     },
     setUserName: (state, action: PayloadAction<string | null | undefined>) => {
@@ -76,6 +75,7 @@ export const authSlice = createSlice({
 
 export const { userLoaded, logout, setUserName } = authSlice.actions;
 
+export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;
