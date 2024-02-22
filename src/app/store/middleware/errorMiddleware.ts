@@ -5,7 +5,7 @@ import type { Middleware } from '@reduxjs/toolkit';
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
-    enqueueSnackbar(action.payload, {
+    enqueueSnackbar(`${action.payload}`, {
       variant: 'error',
     });
   }
