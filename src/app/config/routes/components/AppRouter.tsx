@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import AccountLayout from '@features/ui/layout/AccountLayout/AccountLayout';
 import AuthLayout from '@features/ui/layout/AuthLayout';
-import Dashboard from '@pages/account/dashboard';
+import AddTripPage from '@pages/account/add-trip';
 import DashboardPage from '@pages/account/dashboard';
 import TripsPage from '@pages/account/trips';
 import HomePage from '@pages/home';
@@ -32,9 +32,7 @@ export default function AppRouter() {
       >
         <Route path={AppRoutes.dashboard} element={<DashboardPage />} />
         <Route path={AppRoutes.trips} element={<TripsPage />} />
-        <Route path={AppRoutes.dashboard} element={<Dashboard />} />
-        <Route path={AppRoutes.dashboard} element={<Dashboard />} />
-        <Route path={AppRoutes.dashboard} element={<Dashboard />} />
+        <Route path={AppRoutes.addTrip} element={<AddTripPage />} />
       </Route>
       {/* Not found Page */}
       <Route path="*" element={<NotFoundPage />} />

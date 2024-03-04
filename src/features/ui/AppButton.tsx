@@ -13,6 +13,7 @@ interface Props {
   LinkComponent?: React.ElementType;
   href?: string;
   endIcon?: React.ReactNode;
+  startIcon?: React.ReactNode;
   sx?: SxProps<Theme>;
 }
 
@@ -25,6 +26,7 @@ export default function AppButton({
   href,
   children,
   endIcon,
+  startIcon,
   sx,
   onClick,
 }: Props) {
@@ -36,6 +38,7 @@ export default function AppButton({
       fullWidth={fullWidth}
       type={type}
       variant={variant}
+      startIcon={startIcon}
       endIcon={endIcon}
       onClick={onClick}
       sx={{

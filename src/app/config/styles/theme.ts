@@ -1,5 +1,6 @@
 import { type LinkProps, createTheme } from '@mui/material';
 
+import { Colors } from './Colors';
 import FontFamilies from './FontFamilies';
 import FontWeights from './FontWeights';
 import LinkBehavior from './LinkBehavior';
@@ -29,6 +30,15 @@ const theme = createTheme({
       },
     },
 
+    MuiFormControl: {
+      defaultProps: {
+        sx: {
+          mb: 0,
+          mt: 0,
+        },
+      },
+    },
+
     MuiInputLabel: {
       styleOverrides: {
         root: {
@@ -43,9 +53,48 @@ const theme = createTheme({
         component: LinkBehavior,
       } as LinkProps,
     },
+    MuiButton: {
+      styleOverrides: {
+        startIcon: {
+          '& svg': {
+            fontSize: '1.5rem !important',
+          },
+        },
+        endIcon: {
+          '& svg': {
+            fontSize: '1.5rem !important',
+          },
+        },
+      },
+    },
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior,
+      },
+    },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          color: Colors.disabled,
+          '&.Mui-completed, &.Mui-active': {
+            color: Colors.secondaryBlue,
+          },
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        root: {
+          '.Mui-disabled': {
+            FontWeight: FontWeights.regular,
+          },
+          'Mui-active': {
+            FontWeight: FontWeights.medium,
+          },
+          'Mui-completed': {
+            FontWeight: FontWeights.medium,
+          },
+        },
       },
     },
   },
