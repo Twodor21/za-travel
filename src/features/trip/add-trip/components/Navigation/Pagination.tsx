@@ -35,9 +35,9 @@ export default function Pagination() {
         '.MuiMobileStepper-dots': {
           visibility: 'hidden',
         },
-        display: flex,
+        display: 'flex',
         gap: 2,
-        whiteSpace: 'nowrap';
+        whiteSpace: 'nowrap',
         position: 'absolute',
         bottom: 0,
         left: 0,
