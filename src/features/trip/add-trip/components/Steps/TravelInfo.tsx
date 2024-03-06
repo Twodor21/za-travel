@@ -9,7 +9,7 @@ import { Colors } from '@config/styles';
 import Pagination from '../Navigation/Pagination';
 
 interface FormInput {
-  previewImage: string | null;
+  previewImage?: string | null;
   name: string;
   description: string;
   startDate: Date | null;
@@ -22,8 +22,8 @@ export default function LoginForm() {
   return (
     <Stack
       component="form"
-      noValidate
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
       sx={{ width: '100%' }}
       gap={3}
     >
@@ -163,7 +163,7 @@ function useTravelInfoForm() {
   const { handleSubmit, control, watch } = useForm({
     defaultValues: {
       name: '',
-      descrioption: '',
+      description: '',
       startDate: null,
       endDate: null,
     },
