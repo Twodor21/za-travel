@@ -156,7 +156,6 @@ export default function TravelInfo() {
               inputRef={ref}
               variant="standard"
               margin="normal"
-              required
               fullWidth
               id="description"
               label="description"
